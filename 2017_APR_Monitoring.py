@@ -1,11 +1,16 @@
 #  Use this one. Reads CSV files and returns relevant info.
 from zipfile import ZipFile
 import csv
+from tkinter import *
 from tkinter import filedialog
-
+from datetime import datetime
+root = Tk()
+root.withdraw()
 #  uses zipfile to extract APR to CWD
 apr = ZipFile(filedialog.askopenfilename())
 apr.extractall()
+
+root.quit()
 
 #   Asks which quarter the monitoring is for
 def validate_quarter(quarter):
@@ -135,10 +140,17 @@ elif quarter == 'Q4':
     quarter = Q4
 elif quarter == 'av':
     quarter = av
+    #  Finds today's date, compares it against the most recently completed quarter
 elif quarter == 'ytd':
-    quarter = ytd
-
-
+    datetoday = datetime.now()
+    if datetoday < datetime.strptime('4/1/2018', '%m/%d/%Y'):
+        quarter = (Q1)
+    elif datetoday < datetime.strptime('7/1/2018', '%m/%d/%Y'):
+        quarter = round(((Q1+Q2)/2), 2)
+    elif datetoday < datetime.strptime('10/1/2018', '%m/%d/%Y'):
+        quarter = round(((Q1+Q2+Q3)/3), 2)
+    elif datetoday < datetime.strptime('1/1/2019', '%m/%d/%Y'):
+        quarter = round(((Q1+Q2+Q3+Q4)/4), 2)
 
 #  Priority Populations
 
