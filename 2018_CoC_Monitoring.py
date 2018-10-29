@@ -6,11 +6,13 @@ from tkinter import filedialog
 from datetime import datetime
 import os
 
+
 def main():
     print('')
     print('')
     root = Tk()
     root.withdraw()
+
     #  uses zipfile to extract APR to CWD
     apr = zipfile.ZipFile(filedialog.askopenfilename())
     apr.extractall()
@@ -18,11 +20,11 @@ def main():
     root.quit()
 
     #  prints the project name
-    Q4afile = open('Q4a.csv')
-    Q4areader = csv.reader(Q4afile)
-    exampledata = list(Q4areader)
+    q4afile = open('Q4a.csv')
+    q4areader = csv.reader(q4afile)
+    exampledata = list(q4areader)
     proj = str(exampledata[2][1])
-    Q4afile.close()
+    q4afile.close()
     print('Project Name:', proj)
 
     #  Number of Clients
@@ -75,12 +77,12 @@ def main():
     print('Total Clients:', clno)
 
     #  18-24
-    Q11 = open('Q11.csv')
-    ages = csv.reader(Q11)
+    q11 = open('Q11.csv')
+    ages = csv.reader(q11)
     adata = list(ages)
     youth = int(adata[4][1])
     old = int(adata[9][1])
-    Q11.close()
+    q11.close()
 
     print('Total Adults:', adults)
     print('62+:', old)
@@ -101,66 +103,66 @@ def main():
     print(incomedata[7][0] + '', incomedata[7][2])
 
     #  bennies
-    Q20b = open('Q20b.csv')
-    bennies = csv.reader(Q20b)
+    q20b = open('Q20b.csv')
+    bennies = csv.reader(q20b)
     bdata = list(bennies)
     entrybennies = int(bdata[2][1])
     annualbennies = int(bdata[2][2])
     exitbennies = int(bdata[2][3])
-    Q20b.close()
+    q20b.close()
     print('Households receiving mainstream benefits: ', entrybennies + annualbennies + exitbennies)
 
     #  Households
-    Q7a = open('Q8a.csv')
-    total = csv.reader(Q7a)
+    q7a = open('Q8a.csv')
+    total = csv.reader(q7a)
     hdata = list(total)
     households = int(hdata[1][1])
-    Q7a.close()
+    q7a.close()
     print('Total Households Served:', households)
 
     #  Bed Utilization Q3
-    Q7b = open('Q7b.csv')
-    utilization = csv.reader(Q7b)
+    q7b = open('Q7b.csv')
+    utilization = csv.reader(q7b)
     utdata = list(utilization)
-    Q1 = int(utdata[1][1])
-    Q2 = int(utdata[2][1])
-    Q3 = int(utdata[3][1])
-    Q4 = int(utdata[4][1])
-    Q7b.close()
+    q1 = int(utdata[1][1])
+    q2 = int(utdata[2][1])
+    q3 = int(utdata[3][1])
+    q4 = int(utdata[4][1])
+    q7b.close()
 
     #  Finds today's date, compares it against the most recently completed quarter
 
     datetoday = datetime.now()
     if datetoday > datetime.strptime('1/1/2019', '%m/%d/%Y'):
-        ut = round(((Q1 + Q2 + Q3 + Q4) / 4), 2)
+        ut = round(((q1 + q2 + q3 + q4) / 4), 2)
         if ut != 0:
             print('Bed Utilization:', ut)
         elif ut == 0:
             print('No Clients/APR Error')
     elif datetoday > datetime.strptime('10/1/2018', '%m/%d/%Y'):
-        ut = round(((Q1 + Q2 + Q3) / 3), 2)
+        ut = round(((q1 + q2 + q3) / 3), 2)
         if ut != 0:
             print('Bed Utilization:', ut)
         elif ut == 0:
             print('No clients/APR Error')
     elif datetoday > datetime.strptime('7/1/2018', '%m/%d/%Y'):
-        ut = round(((Q1 + Q2) / 2), 2)
+        ut = round(((q1 + q2) / 2), 2)
         if ut != 0:
             print('Bed Utilization:', ut)
         elif ut == 0:
             print('No Clients/APR Error')
     elif datetoday > datetime.strptime('4/1/2018', '%m/%d/%Y'):
-        print('Bed Utilization:', Q1)
+        print('Bed Utilization:', q1)
 
     #  Priority Populations
 
     #  avg length to housing
-    Q22cfile = open('Q22c.csv')
-    Q22reader = csv.reader(Q22cfile)
-    Q22data = list(Q22reader)
-    hclients = str(Q22data[9][1])
-    avclients = str(Q22data[10][1])
-    Q22cfile.close()
+    q22cfile = open('Q22c.csv')
+    q22reader = csv.reader(q22cfile)
+    q22data = list(q22reader)
+    hclients = str(q22data[9][1])
+    avclients = str(q22data[10][1])
+    q22cfile.close()
     print('Clients Housed:', hclients)
     print('AVG Days to Housing:', avclients)
 
@@ -168,47 +170,47 @@ def main():
     print('18-24 Served:', youth)
 
     #  The Chronic
-    Q26a = open('Q26a.csv')
-    ch = csv.reader(Q26a)
+    q26a = open('Q26a.csv')
+    ch = csv.reader(q26a)
     chdata = list(ch)
     chfam = int(chdata[1][1])
     chron = int((clientdata[10][1]))
-    Q26a.close()
+    q26a.close()
     print('Total Households with a chronically homeless member:', chfam)
 
     #  Families
-    Q8 = open('Q8a.csv')
-    families = csv.reader(Q8)
+    q8 = open('Q8a.csv')
+    families = csv.reader(q8)
     fdata = list(families)
     hwc = int(fdata[1][3])
-    Q8.close()
+    q8.close()
     print('Families Served:', hwc)
 
     #  vets
-    Q25a = open('Q25a.csv')
-    vetno = csv.reader(Q25a)
+    q25a = open('Q25a.csv')
+    vetno = csv.reader(q25a)
     vetdata = list(vetno)
     chvet = int(vetdata[1][1])
     nonchvet = int(vetdata[2][1])
-    Q25a.close()
+    q25a.close()
     print('Veterans Served:', (chvet + nonchvet))
 
     #  DV
-    Q14a = open('Q14a.csv')
-    dv = csv.reader(Q14a)
+    q14a = open('Q14a.csv')
+    dv = csv.reader(q14a)
     dvdata = list(dv)
     dvno = int(dvdata[1][1])
-    Q14a.close()
+    q14a.close()
     print('DV Experience:', dvno)
 
     #  Harder to serve
-    Q13a2 = open('Q13a2.csv')
-    condi = csv.reader(Q13a2)
+    q13a2 = open('Q13a2.csv')
+    condi = csv.reader(q13a2)
     condidata = list(condi)
     threebar = int(condidata[4][1])
     twobar = int(condidata[3][1])
     onebar = int(condidata[2][1])
-    Q13a2.close()
+    q13a2.close()
 
     print('One or more barriers:', threebar + twobar + onebar)
     print('Two or more barriers:', threebar + twobar)
@@ -227,10 +229,15 @@ def main():
 
     newzip.close()
 
+    #  renames zipfile with project name from Q4a
+    newname = proj+str('.zip')
+    os.replace('apr.zip', newname)
+
     #  Deletes csv files
     for file in files:
         if file.endswith('.csv'):
             os.remove(file)
+
 
 while True:
     main()
