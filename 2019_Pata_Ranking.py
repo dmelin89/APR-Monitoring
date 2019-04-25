@@ -2,7 +2,6 @@ import zipfile
 import csv
 from tkinter import *
 from tkinter import filedialog
-from datetime import datetime
 import os
 
 
@@ -32,12 +31,9 @@ def main():
     clients = (csv.reader(clientcsv))
     clientdata = list(clients)
     clno = int(clientdata[0][1])
-    stayers = int(clientdata[7][1])
     clientcsv.close()
 
     #  turn clients, adults, and leavers into integers
-
-    print('Total number of clients: ', clno)
 
     leavers = int((clientdata[4][1]))
     adults = int((clientdata[1][1]))
@@ -88,19 +84,16 @@ def main():
     print('62+:', old)
 
     #  income
-    incomefile = open('Q18.csv')
+    incomefile = open('Q19.csv')
     incomereader = csv.reader(incomefile)
     incomedata = list(incomereader)
-    earnedonly1 = int(incomedata[1][1])
-    earnedonly2 = int(incomedata[1][2])
-    earnedonly3 = int(incomedata[1][3])
-    employ = int(earnedonly1 + earnedonly2 + earnedonly3)
-    nonemploy = int(int(incomedata[2][1]) + int(incomedata[2][2]) + int(incomedata[2][3]))
-    both = int(int(incomedata[3][1]) + int(incomedata[3][2]) + int(incomedata[3][3]))
+    earned_maintained = int(incomedata[1][3])
+    earned_increased = int(incomedata[1][4])
+    employ = earned_maintained + earned_increased
+    nonemploy = (int(incomedata[3][3]) + int(incomedata[3][4]))
     incomefile.close()
-    print('Total with Non-Employment Income:', nonemploy + both)
-    print('Total with Employment Income:', employ + both)
-    print(incomedata[7][0] + '', incomedata[7][2])
+    print('Total with Non-Employment Income:', nonemploy)
+    print('Total with Employment Income:', employ)
 
     #  bennies
     q20b = open('Q20b.csv')
@@ -128,44 +121,11 @@ def main():
     q2 = int(utdata[2][1])
     q3 = int(utdata[3][1])
     q4 = int(utdata[4][1])
+    qtotal = (q1 + q2 + q3 + q4)
     q7b.close()
-
-    #  Finds today's date, compares it against the most recently completed quarter
-
-    datetoday = datetime.now()
-    if datetoday > datetime.strptime('1/1/2020', '%m/%d/%Y'):
-        ut = round(((q1 + q2 + q3 + q4) / 4), 2)
-        if ut != 0:
-            print('Bed Utilization:', ut)
-        elif ut == 0:
-            print('No Clients/APR Error')
-    elif datetoday > datetime.strptime('10/1/2019', '%m/%d/%Y'):
-        ut = round(((q1 + q2 + q3) / 3), 2)
-        if ut != 0:
-            print('Bed Utilization:', ut)
-        elif ut == 0:
-            print('No clients/APR Error')
-    elif datetoday > datetime.strptime('7/1/2019', '%m/%d/%Y'):
-        ut = round(((q1 + q2) / 2), 2)
-        if ut != 0:
-            print('Bed Utilization:', ut)
-        elif ut == 0:
-            print('No Clients/APR Error')
-    elif datetoday > datetime.strptime('4/1/2019', '%m/%d/%Y'):
-        print('Bed Utilization:', q1)
+    print('Bed Utilization: ', round((qtotal / 4), 2))
 
     #  Priority Populations
-
-    #  avg length to housing
-    q22cfile = open('Q22c.csv')
-    q22reader = csv.reader(q22cfile)
-    q22data = list(q22reader)
-    hclients = str(q22data[9][1])
-    avclients = str(q22data[10][1])
-    q22cfile.close()
-    print('Clients Housed:', hclients)
-    print('AVG Days to Housing:', avclients)
-
     #  18-24
     print('18-24 Served:', youth)
 
@@ -174,7 +134,6 @@ def main():
     ch = csv.reader(q26a)
     chdata = list(ch)
     chfam = int(chdata[1][1])
-    chron = int((clientdata[10][1]))
     q26a.close()
     print('Total Households with a chronically homeless member:', chfam)
 
@@ -216,49 +175,6 @@ def main():
     print('Two or more barriers:', threebar + twobar)
     print('Three or more barriers:', threebar)
 
-    #  Street Outreach elements
-    print("")
-    print('Street outreach elements:')
-    #   Temp exits
-    tempexitsless90 = int(less90data[23][1])
-    tempexitsmore90 = int(more90data[23][1])
-    print('Temporary Exits:', tempexitsless90 + tempexitsmore90)
-
-    #  institutional exits
-    instexitsless90 = int(less90data[31][1])
-    instextismore90 = int(more90data[31][1])
-    print('Institutional Exits:', instexitsless90 + instextismore90)
-
-    #  contacts
-    contactscsv = open('Q9a.csv')
-    contactsfile = csv.reader(contactscsv)
-    contactlist = list(contactsfile)
-    contacts = contactlist[5][1]
-    contactscsv.close()
-    print('Total Persons Contacted:', contacts)
-
-    #  engagements
-    engagementscsv = open('Q9b.csv')
-    engagmentsfile = csv.reader(engagementscsv)
-    engagementslist = list(engagmentsfile)
-    engagements = engagementslist[5][1]
-    engagementscsv.close()
-    print('Total Persons Engagements:', engagements)
-
-    #  avg length of stay
-    #  avgcsv = open('Q22b.csv')
-    #  avgfile = csv.reader(avgcsv)
-    #  avglist = list(avgfile)
-    #  stay_avg = int(avglist[1][2])
-    #   leav_avg = int(avglist[1][1])
-    #  avgcsv.close()
-    #  stay_days = (stay_avg * stayers)
-    #  leav_days = (leav_avg * leavers)
-    #  avgdays = round(((stay_days + leav_days) / clno), 2)
-    #  print('')
-    #  print('Average Days Enrolled:', avgdays, 'Days')
-    #  print('stayers:', stayers, 'staydays', stay_days, 'average', stay_avg)
-    #  print('leavers', leavers, 'leavdays', leav_days, 'average', leav_avg)
 
     #  zip csv files into new folder
     newzip = zipfile.ZipFile(os.path.join(os.getcwd(), 'apr.zip'), 'w')
