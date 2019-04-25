@@ -84,7 +84,7 @@ def main():
     print('62+:', old)
 
     #  income
-    incomefile = open('Q19.csv')
+    incomefile = open('Q19a3.csv')
     incomereader = csv.reader(incomefile)
     incomedata = list(incomereader)
     earned_maintained = int(incomedata[1][3])
